@@ -8,11 +8,13 @@ const Form = ({addDados}) => {
     const [showAlert, setShowAlert] = useState(false)
 
     const handleAlert = () => {
-        setShowAlert(true)
+        if (handleSubmit == false) {
+            setShowAlert(true)
 
-        setTimeout(() => {
-            setShowAlert(false)
-        }, 3000);
+            setTimeout(() => {
+                setShowAlert(false)
+            }, 3000);
+        }
     }
 
     const handleSubmit = (e) => {
