@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import './App.css'
 import Form from './Component/Form'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import NewForm from './Component/newForm';
 
 
 function App() {
@@ -19,9 +21,12 @@ function App() {
   }
 
   return (
-    <div>
-      <Form addDados={addDados}/>
-    </div>
+    <Router basename='/'>
+        <Routes>
+          <Route path='/' element={<Form addDados={addDados}/>}></Route>
+          <Route path='/newForm' element={<NewForm addDados={addDados}/>}></Route>
+        </Routes>
+    </Router>
   )
 }
 

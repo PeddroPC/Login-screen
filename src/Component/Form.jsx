@@ -1,21 +1,11 @@
 import React, {useState} from 'react'
 import './Form.css'
+import { Link } from 'react-router-dom'
 
 const Form = ({addDados}) => {
 
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
-    const [showAlert, setShowAlert] = useState(false)
-
-    const handleAlert = () => {
-        if (handleSubmit == false) {
-            setShowAlert(true)
-
-            setTimeout(() => {
-                setShowAlert(false)
-            }, 3000);
-        }
-    }
 
     const handleSubmit = (e) => {
         e.preventDefault()
@@ -24,8 +14,9 @@ const Form = ({addDados}) => {
             console.log(email, password)
             setEmail("")
             setPassword("")
+            alert("Logado")
         }else{
-            console.error("Inválidado")
+            alert("Inválidado")
         }
     }
   return (
@@ -38,21 +29,25 @@ const Form = ({addDados}) => {
             </div>
             <div>
                 <div>
-                    <input type='email' value={email} placeholder='Email:' onChange={(e) => setEmail(e.target.value)}/>
+                    <input className='inputbox' type='email' value={email} placeholder='Email:' onChange={(e) => setEmail(e.target.value)}/>
                 </div>
                 <div>
-                    <input type='password' value={password} placeholder='Senha:' onChange={(e) => setPassword(e.target.value)}/>
+                    <input className='inputbox' type='password' value={password} placeholder='Senha:' onChange={(e) => setPassword(e.target.value)}/>
                 </div>
             </div>
             <div>
-                <button type='submit' onClick={handleAlert}><b>Cadastrar</b></button>
-                {showAlert &&
-                    <div>
-                        <p>Logado com sucesso!!</p>
-                    </div>    
-                }
+                <button type='submit'><b>Logar</b></button>
             </div>
         </form>
+        <div className='cadastrar'>
+            <Link className='link' to='/newForm'>
+                Fazer Cadastro
+            </Link>
+        </div>
+        <div className='lemSenha'>
+            <input type='checkbox' name='forgetPassword'/>
+            <p className='checkbox'>Lembrar senha</p>
+        </div>
     </div>
   )
 }
