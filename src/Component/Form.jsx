@@ -7,18 +7,37 @@ const Form = ({addDados}) => {
     const [email, setEmail] = useState('')
     const [password, setPassword] = useState('')
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if(email && password){
-            addDados(email, password)
-            console.log(email, password)
-            setEmail("")
-            setPassword("")
-            alert("Logado")
-        }else{
-            alert("Inválidado")
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        if (email && password) {
+          try {
+            const response = await fetch('http://localhost:8080/dados/login', {
+              method: 'PUT',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ email, password }),
+            });
+    
+            if (response.ok) {
+              const data = await response.json();
+              console.log(data);
+              addDados(email, password);
+              setEmail('');
+              setPassword('');
+              alert('Logado');
+            } else {
+              alert('Credenciais inválidas');
+            }
+          } catch (error) {
+            console.error('Erro ao realizar login:', error);
+          }
+        } else {
+          alert('Credenciais inválidas');
         }
-    }
+      };
+
   return (
     <div className='card'>
         <form onSubmit={handleSubmit}>

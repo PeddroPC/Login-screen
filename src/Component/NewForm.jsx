@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
 const NewForm = ({addDados}) => {
 
@@ -7,24 +7,38 @@ const NewForm = ({addDados}) => {
     const [nome, setNome] = useState('');
     const [email, setEmail] = useState('');
 
-    const handleSubmit = (e) => {
-        e.preventDefault()
-        if(nome && email && password){
-            if(password === passwordConfirm){
-                addDados(email, password);
-                setNome("");
-                setEmail("");
-                setPassword("");
-                setPasswordConfirm("");
-                alert("Cadastrado!!!");
-            }else{
-                alert("Senha inválida");
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+    
+        if (nome && email && password) {
+          try {
+            const response = await fetch('http://localhost:8080/dados/cadastrar', {
+              method: 'POST',
+              headers: {
+                'Content-Type': 'application/json',
+              },
+              body: JSON.stringify({ name:nome, email, password }),
+            });
+    
+            if (response.ok) {
+              setNome('')
+              setEmail('');
+              setPassword('');
+              setPasswordConfirm('')
+              alert('Cadastrado');
+              const data = await response.json();
+              console.log(data);
+              addDados(nome, email, password);
+            } else {
+              alert('Senha inválida');
             }
-        }else{
-            alert("Inválidado");
+          } catch (error) {
+            console.error('Erro ao realizar cadastro:', error);
+          }
+        } else {
+          alert('Credenciais inválidas');
         }
-    }
-
+      };
     return(
         <div className='card'>
             <form onSubmit={handleSubmit}>

@@ -2,17 +2,19 @@ import { useState } from 'react'
 import './App.css'
 import Form from './Component/Form'
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
-import NewForm from './Component/newForm';
+import NewForm from './Component/NewForm';
 
 
 function App() {
+  
   const [dados, setDados] = useState([])
 
 
-  const addDados = (email, password) => {
+  const addDados = (nome, email, password) => {
     const newDados = [...dados, 
       {
         id: Math.floor(Math.random() * 100000),
+        nome,
         email,
         password
       }
